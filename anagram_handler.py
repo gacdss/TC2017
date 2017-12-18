@@ -19,7 +19,7 @@ class AnagramHandler(object):
 
         self.anagrams = self.anagrams_handler(event, context)
 
-    def anagrams_handler(self, event, context=False):
+    def anagram_handler(self, event, context=False):
         '''Find anagrams of a word'''
 
         self.logger.info('event details: %s', event)
@@ -65,7 +65,7 @@ class AnagramHandler(object):
         
         return word_lookup['anagram'] if (word_lookup and 'anagram' in word_lookup) else False
 
-def anagrams_handler(event, context=False):
+def anagram_handler(event, context=False):
 
     anagrams = AnagramHandler(event, context)
     return anagrams.anagrams
