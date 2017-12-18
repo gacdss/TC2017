@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	  <meta charset="utf-8">	
+       <title>Anagram Search</title>
+       <style type="text/css">
+  hr {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 4px;
+}
+        </style>
+        <script type="text/javascript">
+        //<!--
+            function doLookup() {
+                "use strict";
+                var word = document.getElementById("word").value;
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("POST","https://ziouinjn42.execute-api.us-east-1.amazonaws.com/prod/",true);
+                xhr.onreadystatechange = function() {
+                    var result = document.getElementById("result");
+                    var resp;
+                    if(xhr.readyState == 4 && xhr.status == 200) {
+                        resp = xhr.responseText;
+                        resp = JSON.parse(resp);
+                        if(resp.anagrams !== undefined) {
+                            result.innerHTML = "Anagrams: " + resp.anagrams;
+                        } else if(resp.errorMessage !== undefined) {
+                            result.innerHTML = "API Error: " + resp.errorMessage;
+                        } else if(resp.fail !== undefined) {
+                            result.innerHTML = "API Failure: " + resp.fail;
+                        } else {
+                            result.innerHTML = "Unexpected error";
+                            console.log(resp);
+                        }
+                    }
+                };
+                xhr.send('{"word":"' + word + '"}');
+            }
+        //-->
+        </script>
+    </head>
+    <body>
+	<h1 style="text-align: center;"><br/><br/>Anagram lookup, single word only!</h1>
+	<h2 style="text-align: center;"><label><span style="color: #000080;">Word</span>: <input id="word" autocomplete="off" type="text" value="" /></label> <button onclick="doLookup(); return false;">Find Anagrams</button>
+	<span style="text-align: center;"><br/><br/><span style="color: #000080;"><span id="result"></span></span></span></h2>
+    
+</body>
+</html>
