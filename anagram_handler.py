@@ -17,7 +17,7 @@ class AnagramHandler(object):
         self.dynamodb = boto3.resource('dynamodb')
         self.table = self.dynamodb.Table('anagram_words')
 
-        self.anagrams = self.anagrams_handler(event, context)
+        self.anagrams = self.anagram_handler(event, context)
 
     def anagram_handler(self, event, context=False):
         '''Find anagrams of a word'''
